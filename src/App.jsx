@@ -1,5 +1,5 @@
 import { ShieldCheck } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AddTaskForm from "./components/AddTaskForm";
 import Footer from "./components/Footer";
 import TaskFilter from "./components/TaskFilter";
@@ -10,15 +10,16 @@ function App() {
 	const [tasks, setTasks] = useState([]);
 	const [filter, setFilter] = useState("all");
 
-	const filteredTasks = tasks.filter((task) => {
-		if (filter === "pending") return !task.completed;
-		if (filter === "completed") return task.completed;
-		return true;
-	});
+	const filteredTasks = useMemo(() => {
+		return tasks.filter((task) => {
+			if (filter === "pending") return !task.completed;
+			if (filter === "completed") return task.completed;
+			return true;
+		});
+	}, [filter, tasks]);
 
 	return (
-		<div className="container py-10">
-			<div className="max-w-3xl mx-auto">
+			<div className="max-w-3xl mx-auto mt-12 px-4 lg:px-0">
 				<header className="text-center">
 					<h1 className="text-4xl font-bold flex gap-2 items-center justify-center">
 						<ShieldCheck className="w-8 h-8" />
@@ -38,10 +39,9 @@ function App() {
 						setTasks={setTasks}
 					/>
 					<Footer filteredTasks={filteredTasks} tasks={tasks} />
-					{/* <pre className="mt-4">{JSON.stringify(tasks, null, 2)}</pre> */}
+					<pre className="mt-4">{JSON.stringify(tasks, null, 2)}</pre>
 				</main>
 			</div>
-		</div>
 	);
 }
 

@@ -1,8 +1,9 @@
 import { Edit2, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import EditTaskForm from "./EditTaskForm";
+import { normailzeText } from "../utils/format"
 
-export default function Task({ task, deleteTask, editTask, toggleTask }) {
+const Task = memo(({ task, deleteTask, editTask, toggleTask }) => {
 	const [editingTask, setEditingTask] = useState(null);
 
 	return (
@@ -14,19 +15,23 @@ export default function Task({ task, deleteTask, editTask, toggleTask }) {
 					setEditingTask={setEditingTask}
 				/>
 			) : (
-				<>
-					<div className="flex items-center">
+				<div className="flex w-full gap-6">
+					<div className="flex gap-3 items-center grow">
 						<input
 							type="checkbox"
 							checked={task.completed}
-							className="mr-4 cursor-pointer w-5 h-5 "
+							className="cursor-pointer w-5 h-5 "
 							onChange={(e) => toggleTask(task.id, e.target.checked)}
 						/>
-						<span
-							className={task.completed ? "line-through text-gray-500" : ""}
+						<p
+							className={`grow ${task.completed ? "line-through text-gray-500" : ""}`}
 						>
 							{task.text}
-						</span>
+						</p>
+						<div className="flex gap-4 text-xs">
+							<p className={task.priority === "high" ? "text-red-500" : task.priority === "low" ? "text-green-500" : "text-orange-500"}>{normailzeText(task.priority)}</p>
+							<p className="text-gray-400">{task.due}</p>
+						</div>
 					</div>
 					<div>
 						<button
@@ -44,8 +49,10 @@ export default function Task({ task, deleteTask, editTask, toggleTask }) {
 							<Trash2 className="w-4 h-4" />
 						</button>
 					</div>
-				</>
+				</div>
 			)}
 		</div>
 	);
-}
+});
+
+export default Task;

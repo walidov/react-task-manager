@@ -1,29 +1,30 @@
+import { useCallback } from "react";
 import Task from "./Task";
 
 export default function TaskList({ filteredTasks, tasks, setTasks }) {
-	const editTask = (taskText, taskId) => {
-		setTasks(
-			tasks.map((task) =>
+	const editTask = useCallback((taskText, taskId) => {
+		setTasks((prevTasks) =>
+			prevTasks.map((task) =>
 				task.id === taskId ? { ...task, text: taskText } : task,
 			),
 		);
-	};
+	}, []);
 
-	const deleteTask = (taskId) => {
-		setTasks(
-			tasks.filter((task) => {
+	const deleteTask = useCallback((taskId) => {
+		setTasks((prevTasks) =>
+			prevTasks.filter((task) => {
 				return task.id !== taskId;
 			}),
 		);
-	};
+	}, []);
 
-	const toggleTask = (taskId, check) => {
-		setTasks(
-			tasks.map((task) =>
+	const toggleTask = useCallback((taskId, check) => {
+		setTasks((prevTasks) =>
+			prevTasks.map((task) =>
 				task.id === taskId ? { ...task, completed: check } : task,
 			),
 		);
-	};
+	}, []);
 
 	return (
 		<div className="mt-6 space-y-3">

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-xs: 29rem;
+}
+
 body {
   @apply bg-blue-50 text-gray-700;
 }
