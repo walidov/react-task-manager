@@ -1,8 +1,7 @@
 import { Edit2, Trash2 } from "lucide-react";
 import { memo, useState } from "react";
+import { normalizeText } from "../utils/format.js";
 import EditTaskForm from "./EditTaskForm";
-
-const normailzeText = require("../utils/format.js");
 
 const Task = memo(({ task, deleteTask, editTask, toggleTask }) => {
 	const [editingTask, setEditingTask] = useState(null);
@@ -39,7 +38,7 @@ const Task = memo(({ task, deleteTask, editTask, toggleTask }) => {
 											: "text-orange-500"
 								}
 							>
-								{normailzeText(task.priority)}
+								{normalizeText(task.priority)}
 							</p>
 							<p className="text-gray-400">{task.due}</p>
 						</div>
