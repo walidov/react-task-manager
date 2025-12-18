@@ -2,7 +2,11 @@ import { Plus } from "lucide-react";
 import { memo, useState } from "react";
 
 const AddTaskForm = memo(({ setTasks }) => {
-	const [taskData, setTaskData] = useState({text: "", priority: "high", due: ""});
+	const [taskData, setTaskData] = useState({
+		text: "",
+		priority: "high",
+		due: "",
+	});
 	const [error, setError] = useState("");
 
 	const handleAddTask = (e) => {
@@ -10,12 +14,18 @@ const AddTaskForm = memo(({ setTasks }) => {
 		if (taskData.text.trim() !== "" && taskData.due.trim() !== "") {
 			setTasks((prevTasks) => [
 				...prevTasks,
-				{ id: Date.now(), text: taskData.text, priority: taskData.priority, due: taskData.due, completed: false },
+				{
+					id: Date.now(),
+					text: taskData.text,
+					priority: taskData.priority,
+					due: taskData.due,
+					completed: false,
+				},
 			]);
-			setTaskData({text: "", priority: "high", due: ""});
+			setTaskData({ text: "", priority: "high", due: "" });
 			setError("");
 		} else {
-			setError("Please enter all fields!")
+			setError("Please enter all fields!");
 		}
 	};
 
@@ -23,8 +33,11 @@ const AddTaskForm = memo(({ setTasks }) => {
 		<div className="bg-white rounded-xl p-6 shadow mt-6">
 			<form onSubmit={handleAddTask} className="flex flex-col md:flex-row">
 				<div className="flex flex-col justify-end md:me-3 grow">
-					<label className="text-sm text-gray-500">Task:</label>
+					<label for="taskText" className="text-sm text-gray-500">
+						Task:
+					</label>
 					<input
+						id="taskText"
 						type="text"
 						placeholder="Add new task..."
 						className="h-12 px-4 border border-gray-300 rounded-lg outline-none mt-1"
@@ -35,16 +48,37 @@ const AddTaskForm = memo(({ setTasks }) => {
 				<div className="flex flex-col xs:flex-row gap-3 items-end mt-4 md:mt-0">
 					<div className="flex gap-3 w-full grow">
 						<div className="flex flex-col justify-end grow">
-							<label className="text-sm text-gray-500">Priority:</label>
-							<select placeholder="Priority" className="border border-gray-300 rounded-md px-2 h-12 mt-1" value={taskData.priority} onChange={(e) => setTaskData({ ...taskData, priority: e.target.value })}>
+							<label for="prioritySelect" className="text-sm text-gray-500">
+								Priority:
+							</label>
+							<select
+								id="prioritySelect"
+								placeholder="Priority"
+								className="border border-gray-300 rounded-md px-2 h-12 mt-1"
+								value={taskData.priority}
+								onChange={(e) =>
+									setTaskData({ ...taskData, priority: e.target.value })
+								}
+							>
 								<option value="high">High</option>
 								<option value="medium">Medium</option>
 								<option value="low">Low</option>
 							</select>
 						</div>
 						<div className="flex flex-col justify-end grow">
-							<label className="text-sm text-gray-500">Due date:</label>
-							<input type="date" placeholder="Due Date" className="border border-gray-300 rounded-md px-2 h-12 mt-1" value={taskData.due} onChange={(e) => setTaskData({ ...taskData, due: e.target.value })} />
+							<label for="dueDatePicker" className="text-sm text-gray-500">
+								Due date:
+							</label>
+							<input
+								id="dueDatePicker"
+								type="date"
+								placeholder="Due Date"
+								className="border border-gray-300 rounded-md px-2 h-12 mt-1"
+								value={taskData.due}
+								onChange={(e) =>
+									setTaskData({ ...taskData, due: e.target.value })
+								}
+							/>
 						</div>
 					</div>
 					<button

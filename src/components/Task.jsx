@@ -1,7 +1,8 @@
 import { Edit2, Trash2 } from "lucide-react";
 import { memo, useState } from "react";
 import EditTaskForm from "./EditTaskForm";
-import { normailzeText } from "../utils/format"
+
+const normailzeText = require("../utils/format.js");
 
 const Task = memo(({ task, deleteTask, editTask, toggleTask }) => {
 	const [editingTask, setEditingTask] = useState(null);
@@ -29,7 +30,17 @@ const Task = memo(({ task, deleteTask, editTask, toggleTask }) => {
 							{task.text}
 						</p>
 						<div className="flex gap-4 text-xs">
-							<p className={task.priority === "high" ? "text-red-500" : task.priority === "low" ? "text-green-500" : "text-orange-500"}>{normailzeText(task.priority)}</p>
+							<p
+								className={
+									task.priority === "high"
+										? "text-red-500"
+										: task.priority === "low"
+											? "text-green-500"
+											: "text-orange-500"
+								}
+							>
+								{normailzeText(task.priority)}
+							</p>
 							<p className="text-gray-400">{task.due}</p>
 						</div>
 					</div>
