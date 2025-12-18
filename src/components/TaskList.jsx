@@ -1,7 +1,12 @@
+import { Search } from "lucide-react";
 import { useCallback } from "react";
 import Task from "./Task";
 
-export default function TaskList({ filteredTasks, tasks, setTasks }) {
+export default function TaskList({
+	filteredTasks,
+	setTasks,
+	setSearchKeyword,
+}) {
 	const editTask = useCallback((taskText, taskId) => {
 		setTasks((prevTasks) =>
 			prevTasks.map((task) =>
@@ -27,7 +32,18 @@ export default function TaskList({ filteredTasks, tasks, setTasks }) {
 	}, []);
 
 	return (
-		<div className="mt-6 space-y-3">
+		<div className="space-y-3 mt-6">
+			{filteredTasks?.length > 0 && (
+				<div className="py-2 px-4 border border-gray-200 rounded-lg w-full bg-gray-50 flex items-center">
+					<Search className="w-4 h-4 me-3 text-gray-400" />
+					<input
+						type="text"
+						placeholder="Search tasks..."
+						className="w-full outline-none"
+						onChange={(e) => setSearchKeyword(e.target.value)}
+					/>
+				</div>
+			)}
 			{filteredTasks?.length > 0 ? (
 				filteredTasks.map((task, index) => (
 					<Task
